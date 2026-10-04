@@ -1,4 +1,5 @@
-name: "Vibastic ${{ inputs.client_build_id }}"
+name: "Vibastic Builds"
+run-name: "Vibastic ${{ github.event.inputs.client_build_id }}"
 on:
   workflow_dispatch:
     inputs:
@@ -28,12 +29,12 @@ jobs:
         run: gem install fastlane --no-document
       - name: Fetch App Store Connect key (single-use, 10 min TTL, never logged)
         run: |
-          curl -sS -H "x-runner-token: ${{ inputs.runner_token }}" \
-            "${{ inputs.vibastic_origin }}/api/apple/key" -o asc_key.json
+          curl -sS -H "x-runner-token: ${{ github.event.inputs.runner_token }}" \
+            "${{ github.event.inputs.vibastic_origin }}/api/apple/key" -o asc_key.json
           test -s asc_key.json
       - name: Fastlane (match + sign + deliver)
         env:
-          TARGET: ${{ inputs.target }}
+          TARGET: ${{ github.event.inputs.target }}
         run: |
           cp Fastfile ios/fastlane/Fastfile 2>/dev/null || (mkdir -p ios/fastlane && cp Fastfile ios/fastlane/Fastfile)
           cd ios && fastlane "${TARGET}" --verbose
