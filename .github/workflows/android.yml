@@ -1,4 +1,5 @@
-name: "Vibastic ${{ github.event.inputs.client_build_id }}"
+name: "Vibastic Builds"
+run-name: "Vibastic ${{ github.event.inputs.client_build_id }}"
 on:
   workflow_dispatch:
     inputs:
