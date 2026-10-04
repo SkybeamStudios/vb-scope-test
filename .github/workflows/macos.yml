@@ -16,6 +16,8 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with: { node-version: "20" }
+      - name: Install app icon (official Vibastic icon for dock/taskbar/installer)
+        run: bash install-electron-icon.sh
       - name: Build DMG (electron-builder)
         working-directory: electron
         run: |

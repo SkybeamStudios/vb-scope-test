@@ -20,6 +20,8 @@ jobs:
           npm install @capacitor/core @capacitor/cli @capacitor/ios --no-audit --no-fund
           npx cap add ios
           npx cap sync ios
+      - name: Install app icon (official Vibastic AppIcon)
+        run: bash ios-install-icons.sh
       - name: Build unsigned IPA (CODE_SIGNING_ALLOWED=NO)
         run: |
           xcodebuild -project ios/App/App.xcodeproj -scheme App -configuration Release \

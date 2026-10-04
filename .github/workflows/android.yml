@@ -17,6 +17,9 @@ jobs:
         with: { distribution: temurin, java-version: "17" }
       - name: Accept Android SDK licenses (SDK is preinstalled on the runner)
         run: yes | "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" --licenses >/dev/null 2>&1 || true
+      - name: Install app icons (launcher, adaptive, Android 12+ splash)
+        working-directory: android
+        run: bash install-icons.sh
       - name: Build
         working-directory: android
         run: |

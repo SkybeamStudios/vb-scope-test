@@ -12,10 +12,18 @@ jobs:
     timeout-minutes: 45
     steps:
       - uses: actions/checkout@v4
+      - name: Install app icon (official Vibastic icon)
+        run: bash install-electron-icon.sh
+      - name: Build Electron app (unpacked)
+        working-directory: electron
+        run: |
+          npm install
+          npx electron-builder --linux dir --publish never
       - name: Prepare Electron app for snapcraft
         run: |
           mkdir -p snap/gui app
           cp -r electron/app/* app/
+          cp electron/build/icon.png snap/gui/icon.png
           cat > snap/snapcraft.yaml <<'YAML'
           name: vibastic-app
           base: core22
@@ -24,6 +32,7 @@ jobs:
           description: App generated with Vibastic
           confinement: strict
           grade: stable
+          icon: snap/gui/icon.png
           apps:
             vibastic-app:
               command: electron-launch

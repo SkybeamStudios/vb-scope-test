@@ -25,6 +25,8 @@ jobs:
           npm install @capacitor/core @capacitor/cli @capacitor/ios --no-audit --no-fund
           npx cap add ios
           npx cap sync ios
+      - name: Install app icon (official Vibastic AppIcon)
+        run: bash ios-install-icons.sh
       - name: Install fastlane
         run: gem install fastlane --no-document
       - name: Fetch App Store Connect key (single-use, 10 min TTL, never logged)
